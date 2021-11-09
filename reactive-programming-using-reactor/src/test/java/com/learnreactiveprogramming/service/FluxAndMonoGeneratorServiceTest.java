@@ -50,4 +50,17 @@ class FluxAndMonoGeneratorServiceTest {
                 .expectNext("alex", "ben", "chloe")
                 .verifyComplete();
     }
+
+    @Test
+    void namesFlux_flatmap() {
+        // given
+        int stringLength = 3;
+
+        // when
+        var namesFlux = fluxAndMonoGeneratorService.namesFlux_flatmap(stringLength);
+
+        StepVerifier.create(namesFlux)
+                .expectNext("A","L","E","X","C","H","L","O","E")
+                .verifyComplete();
+    }
 }
