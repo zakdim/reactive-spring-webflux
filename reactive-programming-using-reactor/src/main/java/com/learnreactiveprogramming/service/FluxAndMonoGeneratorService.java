@@ -38,6 +38,26 @@ public class FluxAndMonoGeneratorService {
         return namesFlux;
     }
 
+    public Mono<String> namesMono_map_filter(int stringLength) {
+        return Mono.just("alex")
+                .map(String::toUpperCase)
+                .filter(s -> s.length() > stringLength);
+    }
+
+    public Mono<List<String>> namesMono_flatMap(int stringLength) {
+        return Mono.just("alex")
+                .map(String::toUpperCase)
+                .filter(s -> s.length() > stringLength)
+                .flatMap(this::splitStringMono)
+                .log(); // Mono<List of A,L,E,X>
+    }
+
+    private Mono<List<String>> splitStringMono(String s) {
+        var charArray = s.split("");
+        var charList = List.of(charArray); // ALEX -> A,L,E,X
+        return Mono.just(charList);
+    }
+
     public Flux<String> namesFlux_flatmap(int stringLength) {
         // filter the string whose length is greater than 3
         return Flux.fromIterable(List.of("alex", "ben", "chloe"))
