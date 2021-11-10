@@ -5,7 +5,6 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.Random;
 
 public class FluxAndMonoGeneratorService {
 
@@ -61,6 +60,17 @@ public class FluxAndMonoGeneratorService {
                 .log(); // db or a remote service call
     }
 
+    public Flux<String> namesFlux_concatmap(int stringLength) {
+        // filter the string whose length is greater than 3
+        return Flux.fromIterable(List.of("alex", "ben", "chloe"))
+                .map(String::toUpperCase)
+//                .map(s -> s.toUpperCase())
+                .filter(s -> s.length() > stringLength)
+                // ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
+                .concatMap(s -> splitString_withDelay(s)) // A,L,E,X,C,H,L,O,E
+                .log(); // db or a remote service call
+    }
+
     // ALEX -> Flux(A,L,E,X)
     public Flux<String> splitString(String name) {
         var charArray = name.split("");
@@ -69,7 +79,8 @@ public class FluxAndMonoGeneratorService {
 
     public Flux<String> splitString_withDelay(String name) {
         var charArray = name.split("");
-        var delay = new Random().nextInt(1000);
+//        var delay = new Random().nextInt(1000);
+        var delay = 1000;
         return Flux.fromArray(charArray)
                 .delayElements(Duration.ofMillis(delay));
     }
