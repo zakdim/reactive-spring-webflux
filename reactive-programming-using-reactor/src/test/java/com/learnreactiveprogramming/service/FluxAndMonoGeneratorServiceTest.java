@@ -63,4 +63,18 @@ class FluxAndMonoGeneratorServiceTest {
                 .expectNext("A","L","E","X","C","H","L","O","E")
                 .verifyComplete();
     }
+
+    @Test
+    void namesFlux_flatmap_async() {
+        // given
+        int stringLength = 3;
+
+        // when
+        var namesFlux = fluxAndMonoGeneratorService.namesFlux_flatmap_async(stringLength);
+
+        StepVerifier.create(namesFlux)
+//                .expectNext("A","L","E","X","C","H","L","O","E")
+                .expectNextCount(9)
+                .verifyComplete();
+    }
 }
