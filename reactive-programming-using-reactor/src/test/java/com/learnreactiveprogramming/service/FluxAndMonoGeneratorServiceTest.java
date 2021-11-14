@@ -199,4 +199,37 @@ class FluxAndMonoGeneratorServiceTest {
                 .expectNext("A", "B")
                 .verifyComplete();
     }
+
+    @Test
+    void explore_merge() {
+        // when
+        var mergeFlux = fluxAndMonoGeneratorService.explore_merge();
+
+        // then
+        StepVerifier.create(mergeFlux)
+                .expectNext("A", "D", "B", "E", "C", "F")
+                .verifyComplete();
+    }
+
+    @Test
+    void explore_mergeWith() {
+        // when
+        var mergeFlux = fluxAndMonoGeneratorService.explore_mergeWith();
+
+        // then
+        StepVerifier.create(mergeFlux)
+                .expectNext("A", "D", "B", "E", "C", "F")
+                .verifyComplete();
+    }
+
+    @Test
+    void explore_mergeWith_mono() {
+        // when
+        var mergeFlux = fluxAndMonoGeneratorService.explore_mergeWith_mono();
+
+        // then
+        StepVerifier.create(mergeFlux)
+                .expectNext("A", "B")
+                .verifyComplete();
+    }
 }
