@@ -243,4 +243,48 @@ class FluxAndMonoGeneratorServiceTest {
                 .expectNext("A", "B", "C", "D", "E", "F")
                 .verifyComplete();
     }
+
+    @Test
+    void explore_zip() {
+        // when
+        var value = fluxAndMonoGeneratorService.explore_zip();
+
+        // then
+        StepVerifier.create(value)
+                .expectNext("AD", "BE", "CF")
+                .verifyComplete();
+    }
+
+    @Test
+    void explore_zip_1() {
+        // when
+        var value = fluxAndMonoGeneratorService.explore_zip_1();
+
+        // then
+        StepVerifier.create(value)
+                .expectNext("AD14", "BE25", "CF36")
+                .verifyComplete();
+    }
+
+    @Test
+    void explore_zipWith() {
+        // when
+        var value = fluxAndMonoGeneratorService.explore_zipWith();
+
+        // then
+        StepVerifier.create(value)
+                .expectNext("AD", "BE", "CF")
+                .verifyComplete();
+    }
+
+    @Test
+    void explore_zipWith_mono() {
+        // when
+        var value = fluxAndMonoGeneratorService.explore_zipWith_mono();
+
+        // then
+        StepVerifier.create(value)
+                .expectNext("AB")
+                .verifyComplete();
+    }
 }
