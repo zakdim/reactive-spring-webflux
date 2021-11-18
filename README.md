@@ -48,3 +48,11 @@ brew services start mongodb-community
 ``` 
 movies-info-service (master) $ ./gradlew bootRun
 ```
+
+#### Section 11 - Simple Non Blocking RESTFUL API using Annotated Controller Approach
+
+##### Lecture 36 - Building a Simple Non Blocking API - Flux
+
+``` 
+$ curl http://localhost:8080/flux
+```
