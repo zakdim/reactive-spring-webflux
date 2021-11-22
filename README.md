@@ -17,6 +17,8 @@ brew install mongodb-community
 
 ```
 brew services restart mongodb-community
+brew services start mongodb-community
+brew services stop mongodb-community
 ```
 
 #### Install Mongo DB in Windows
