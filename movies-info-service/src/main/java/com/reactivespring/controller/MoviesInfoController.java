@@ -25,6 +25,11 @@ public class MoviesInfoController {
         return moviesInfoService.getAllMovieInfos().log();
     }
 
+    @GetMapping("/movieinfos/{id}")
+    public Mono<MovieInfo> getMovieInfosById(@PathVariable String id) {
+        return moviesInfoService.getMovieInfoById(id).log();
+    }
+
     @PostMapping("/movieinfos")
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<MovieInfo> addMovieInfo(@RequestBody MovieInfo movieInfo) {
