@@ -36,4 +36,11 @@ public class MoviesInfoController {
 
         return moviesInfoService.addMovieInfo(movieInfo).log();
     }
+
+    @PutMapping("/movieinfos/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<MovieInfo> updateMovieInfo(@RequestBody MovieInfo updatedMovieInfo, @PathVariable String id) {
+
+        return moviesInfoService.updateMovieInfo(updatedMovieInfo, id).log();
+    }
 }
