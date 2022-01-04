@@ -149,9 +149,7 @@ class MoviesInfoControllerIntgTest {
                 .bodyValue(movieInfo)
                 .exchange()
                 .expectStatus()
-                .is2xxSuccessful();
-
-        // then
+                .isNotFound();
     }
 
     @Test
