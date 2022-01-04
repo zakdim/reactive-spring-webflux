@@ -74,3 +74,16 @@ responseBody: {"timestamp":"2022-01-04T19:18:18.355+00:00","path":"/v1/movieinfo
 ``` 
 responseBody: movieInfo.name must be present,movieInfo.year must be Positive value
 ```
+
+## Section 20 - Introduction to Functional Web Module in Spring WebFlux
+
+### Lecture 73 - Build a simple RestFull API using Functional Web
+
+* To run movies review service application
+
+``` 
+cd movies-review-service
+./gradlew bootRun
+
+curl http://localhost:8081/v1/helloworld
+```
