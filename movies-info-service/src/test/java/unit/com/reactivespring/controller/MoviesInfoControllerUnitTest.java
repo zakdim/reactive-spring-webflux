@@ -109,4 +109,35 @@ public class MoviesInfoControllerUnitTest {
                     assertEquals("mockId", savedMovieInfo.getMovieInfoId());
                 });
     }
+
+    @Test
+    void updateMovieInfo() {
+        // given
+        var movieInfoId = "abc";
+        var movieInfo = new MovieInfo(null, "Dark Knight Rises1",
+                2005, List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15"));
+        // when
+        when(moviesInfoServiceMock.updateMovieInfo(isA(MovieInfo.class), isA(String.class))).thenReturn(
+                Mono.just(new MovieInfo(movieInfoId, "Dark Knight Rises1",
+                        2005, List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15")))
+        );
+
+        webTestClient
+                .put()
+                .uri(MOVIE_INFOS_URL + "/{id}", movieInfoId)
+                .bodyValue(movieInfo)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody(MovieInfo.class)
+                .consumeWith(movieInfoEntityExchangeResult -> {
+
+                    var updatedMovieInfo = movieInfoEntityExchangeResult.getResponseBody();
+                    assert updatedMovieInfo != null;
+                    assert updatedMovieInfo.getMovieInfoId() != null;
+                    assertEquals("Dark Knight Rises1", updatedMovieInfo.getName());
+                });
+
+        // then
+    }
 }
