@@ -69,3 +69,8 @@ $ curl http://localhost:8080/flux
 responseBody: {"timestamp":"2022-01-04T19:18:18.355+00:00","path":"/v1/movieinfos","status":400,"error":"Bad Request","requestId":"8b2b7f0"}
 ```
 
+* Custom error response
+
+``` 
+responseBody: movieInfo.name must be present,movieInfo.year must be Positive value
+```
