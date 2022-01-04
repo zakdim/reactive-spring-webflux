@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
@@ -108,6 +109,41 @@ public class MoviesInfoControllerUnitTest {
                     assert savedMovieInfo.getMovieInfoId() != null;
                     assertEquals("mockId", savedMovieInfo.getMovieInfoId());
                 });
+    }
+
+    @Test
+    void addMovieInfo_validation() {
+        // given
+        var movieInfo = new MovieInfo(null, "",
+                -2005, List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15"));
+
+        when(moviesInfoServiceMock.addMovieInfo(isA(MovieInfo.class))).thenReturn(
+                Mono.just(new MovieInfo("mockId", "Batman Begins1",
+                        2005, List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15")))
+        );
+
+        webTestClient
+                .post()
+                .uri(MOVIE_INFOS_URL)
+                .bodyValue(movieInfo)
+                .exchange()
+                .expectStatus()
+                .isBadRequest()
+                .expectBody(String.class)
+                .consumeWith(stringEntityExchangeResult -> {
+                    var responseBody = stringEntityExchangeResult.getResponseBody();
+                    System.out.println("responseBody: " + responseBody);
+                    assertNotNull(responseBody);
+                })
+//                .expectBody(MovieInfo.class)
+//                .consumeWith(movieInfoEntityExchangeResult -> {
+//
+//                    var savedMovieInfo = movieInfoEntityExchangeResult.getResponseBody();
+//                    assert savedMovieInfo != null;
+//                    assert savedMovieInfo.getMovieInfoId() != null;
+//                    assertEquals("mockId", savedMovieInfo.getMovieInfoId());
+//                })
+                ;
     }
 
     @Test
