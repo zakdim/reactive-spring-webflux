@@ -132,4 +132,21 @@ class MovieInfoRepositoryIntgTest {
                 .expectNextCount(1)
                 .verifyComplete();
     }
+
+    @Test
+    void findByName() {
+        // given
+        var expectedName = "Batman Begins";
+
+        // when
+        var moviesInfoMono = movieInfoRepository.findByName(expectedName.toLowerCase()).log();
+
+        // then
+        StepVerifier.create(moviesInfoMono)
+//                .expectNextCount(1)
+                .assertNext(m -> {
+                    assertEquals(expectedName, m.getName());
+                })
+                .verifyComplete();
+    }
 }
