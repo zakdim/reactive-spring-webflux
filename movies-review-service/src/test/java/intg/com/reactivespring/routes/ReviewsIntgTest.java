@@ -62,4 +62,18 @@ public class ReviewsIntgTest {
                     assert savedReview.getReviewId() != null;
                 });
     }
+
+    @Test
+    void getAllReviews() {
+
+        webTestClient
+                .get()
+                .uri(REVIEWS_URL)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBodyList(Review.class)
+                .hasSize(3);
+
+    }
 }

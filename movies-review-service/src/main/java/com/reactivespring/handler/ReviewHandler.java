@@ -26,4 +26,10 @@ public class ReviewHandler {
                 .flatMap(reviewReactiveRepository::save)
                 .flatMap(ServerResponse.status(HttpStatus.CREATED)::bodyValue);
     }
+
+    public Mono<ServerResponse> getReviews(ServerRequest request) {
+
+        var reviewsFlux = reviewReactiveRepository.findAll();
+        return ServerResponse.ok().body(reviewsFlux, Review.class);
+    }
 }
