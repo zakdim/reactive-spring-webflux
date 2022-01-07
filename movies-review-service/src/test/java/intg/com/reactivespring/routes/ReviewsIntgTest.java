@@ -13,6 +13,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @AutoConfigureWebTestClient
@@ -31,7 +34,7 @@ public class ReviewsIntgTest {
         var reviewsList = List.of(
                 new Review(null, 1L, "Awesome Movie", 9.0),
                 new Review(null, 1L, "Awesome Movie1", 9.0),
-                new Review(null, 2L, "Excellent Movie", 8.0));
+                new Review("abc", 2L, "Excellent Movie", 8.0));
         reviewReactiveRepository.saveAll(reviewsList)
                 .blockLast();
     }
@@ -55,9 +58,9 @@ public class ReviewsIntgTest {
                 .expectStatus()
                 .isCreated()
                 .expectBody(Review.class)
-                .consumeWith(movieInfoEntityExchangeResult -> {
+                .consumeWith(reviewEntityExchangeResult -> {
 
-                    var savedReview = movieInfoEntityExchangeResult.getResponseBody();
+                    var savedReview = reviewEntityExchangeResult.getResponseBody();
                     assert savedReview != null;
                     assert savedReview.getReviewId() != null;
                 });
@@ -75,5 +78,30 @@ public class ReviewsIntgTest {
                 .expectBodyList(Review.class)
                 .hasSize(3);
 
+    }
+
+    @Test
+    void updateReview() {
+        // given
+        var reviewId = "abc";
+        var review = new Review(null, 2L, "Excellent Movie1", 8.5);
+
+        // then
+        webTestClient
+                .put()
+                .uri(REVIEWS_URL + "/{id}", reviewId)
+                .bodyValue(review)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody(Review.class)
+                .consumeWith(reviewEntityExchangeResult -> {
+
+                    var updatedReview = reviewEntityExchangeResult.getResponseBody();
+                    assert updatedReview != null;
+                    assert updatedReview.getReviewId().equals("abc");
+                    assertEquals("Excellent Movie1", updatedReview.getComment());
+                    assertEquals(8.5D, updatedReview.getRating());
+                });
     }
 }
