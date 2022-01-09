@@ -45,6 +45,6 @@ curl -i \
 -H "Content-Type: application/json" \
 -X PUT http://localhost:8081/v1/reviews/100
 
-DELETE-MOVIE-INFO
+DELETE-REVIEW
 -----------------------
 curl -i -X DELETE http://localhost:8081/v1/reviews/1

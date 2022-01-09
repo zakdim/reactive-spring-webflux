@@ -26,7 +26,7 @@ public class ReviewsRestClient {
 
         var url = UriComponentsBuilder.fromHttpUrl(reviewsUrl)
                 .queryParam("movieInfoId", movieId)
-                .buildAndExpand().toUriString();
+                .buildAndExpand().toString();
 
         return webClient
                 .get()
