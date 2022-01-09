@@ -14,7 +14,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -103,5 +102,19 @@ public class ReviewsIntgTest {
                     assertEquals("Excellent Movie1", updatedReview.getComment());
                     assertEquals(8.5D, updatedReview.getRating());
                 });
+    }
+
+    @Test
+    void deleteReview() {
+        // given
+        var reviewId = "abc";
+
+        // then
+        webTestClient
+                .delete()
+                .uri(REVIEWS_URL + "/{id}", reviewId)
+                .exchange()
+                .expectStatus()
+                .isNoContent();
     }
 }
