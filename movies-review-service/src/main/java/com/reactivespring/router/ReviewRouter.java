@@ -1,6 +1,6 @@
 package com.reactivespring.router;
 
-import com.reactivespring.handler.ReviewHandler;
+import com.reactivespring.handler.ReviewsHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -16,7 +16,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class ReviewRouter {
 
     @Bean
-    public RouterFunction<ServerResponse> reviewsRouter(ReviewHandler reviewHandler) {
+    public RouterFunction<ServerResponse> reviewsRouter(ReviewsHandler reviewHandler) {
 
         return route()
                 .nest(path("/v1/reviews"), builder -> {

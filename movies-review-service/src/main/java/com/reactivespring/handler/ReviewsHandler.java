@@ -22,14 +22,14 @@ import java.util.stream.Collectors;
  */
 @Component
 @Slf4j
-public class ReviewHandler {
+public class ReviewsHandler {
 
     @Autowired
     private Validator validator;
 
     private ReviewReactiveRepository reviewReactiveRepository;
 
-    public ReviewHandler(ReviewReactiveRepository reviewReactiveRepository) {
+    public ReviewsHandler(ReviewReactiveRepository reviewReactiveRepository) {
         this.reviewReactiveRepository = reviewReactiveRepository;
     }
 
