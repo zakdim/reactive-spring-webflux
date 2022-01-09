@@ -2,7 +2,7 @@ package com.reactivespring.routes;
 
 import com.reactivespring.domain.Review;
 import com.reactivespring.exceptionhandler.GlobalErrorHandler;
-import com.reactivespring.handler.ReviewsHandler;
+import com.reactivespring.handler.ReviewHandler;
 import com.reactivespring.repository.ReviewReactiveRepository;
 import com.reactivespring.router.ReviewRouter;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @WebFluxTest
-@ContextConfiguration(classes = {ReviewRouter.class, ReviewsHandler.class, GlobalErrorHandler.class})
+@ContextConfiguration(classes = {ReviewRouter.class, ReviewHandler.class, GlobalErrorHandler.class})
 @AutoConfigureWebTestClient
 public class ReviewsUnitTest {
 
