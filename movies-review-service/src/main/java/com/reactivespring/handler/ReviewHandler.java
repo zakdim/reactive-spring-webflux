@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -29,7 +30,17 @@ public class ReviewHandler {
 
     public Mono<ServerResponse> getReviews(ServerRequest request) {
 
-        var reviewsFlux = reviewReactiveRepository.findAll();
+        var movieInfoId = request.queryParam("movieInfoId");
+        if (movieInfoId.isPresent()) {
+            var reviewsFlux = reviewReactiveRepository.findReviewsByMovieInfoId(Long.valueOf(movieInfoId.get()));
+            return buildReviewsRespons(reviewsFlux);
+        } else {
+            var reviewsFlux = reviewReactiveRepository.findAll();
+            return buildReviewsRespons(reviewsFlux);
+        }
+    }
+
+    private Mono<ServerResponse> buildReviewsRespons(Flux<Review> reviewsFlux) {
         return ServerResponse.ok().body(reviewsFlux, Review.class);
     }
 

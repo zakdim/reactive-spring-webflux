@@ -75,21 +75,47 @@ public class ReviewsIntgTest {
                 .expectStatus()
                 .is2xxSuccessful()
                 .expectBodyList(Review.class)
-                .hasSize(3);
+//                .hasSize(3);
+                .value(reviews -> {
+                    assertEquals(3, reviews.size());
+                });
+    }
 
+    @Test
+    void getReviewsByMovieInfoId() {
+
+        // given
+//        var uri = UriComponentsBuilder.fromUriString(REVIEWS_URL)
+//                .queryParam("movieInfoId", "1")
+//                .buildAndExpand().toUri();
+
+        // when
+        webTestClient
+                .get()
+//                .uri(uri)
+                .uri(uriBuilder -> {
+                    return uriBuilder.path(REVIEWS_URL)
+                            .queryParam("movieInfoId", "1")
+                            .build();
+                })
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBodyList(Review.class)
+                .hasSize(2);
     }
 
     @Test
     void updateReview() {
         // given
         var reviewId = "abc";
-        var review = new Review(null, 2L, "Excellent Movie1", 8.5);
+        var reviewUpdate = new Review(null, 2L, "Excellent Movie1", 8.5);
 
         // then
         webTestClient
                 .put()
                 .uri(REVIEWS_URL + "/{id}", reviewId)
-                .bodyValue(review)
+                .bodyValue(reviewUpdate)
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
