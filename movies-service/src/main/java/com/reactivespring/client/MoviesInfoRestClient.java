@@ -54,6 +54,7 @@ public class MoviesInfoRestClient {
                                     "Server exception in MoviesInfoService: " + responseMessage)));
                 })
                 .bodyToMono(MovieInfo.class)
+                .retry(3)
                 .log();
     }
 }
