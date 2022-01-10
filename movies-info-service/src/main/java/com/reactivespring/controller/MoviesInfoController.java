@@ -50,7 +50,8 @@ public class MoviesInfoController {
     @GetMapping(value = "/movieinfos/stream", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<MovieInfo> getMovieInfosById() {
 
-        return moviesInfoSink.asFlux();
+        return moviesInfoSink.asFlux()
+                .log();
     }
 
     @PostMapping("/movieinfos")
