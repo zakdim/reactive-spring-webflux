@@ -1,6 +1,12 @@
 # reactive-spring-webflux
 Spring Webflux
 
+Useful references:
+
+* [Web on Reactive Stack](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html)
+* [Reactor 3 Reference Guide](https://projectreactor.io/docs/core/release/reference/)
+
+
 ## Install Mongo DB in MAC
 
 - Run the below command to install the **MongoDB**.
@@ -87,3 +93,10 @@ cd movies-review-service
 
 curl http://localhost:8081/v1/helloworld
 ```
+
+## Section 30 - Server Sent Events (SSE)
+
+### Lecture 111 - Introduction to Sinks
+
+* [Reactor 3 Reference Guide](https://projectreactor.io/docs/core/release/reference/)
+* [4.7. Processors and Sinks](https://projectreactor.io/docs/core/release/reference/#processors)
